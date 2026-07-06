@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-22.04, macos-15-intel, macos-latest]
+        # os: [windows-latest, ubuntu-latest, macos-15-intel, macos-latest, windows-11-arm]
+        include:
+          - os: windows-latest
+            build: bff-Windows.exe
+          - os: ubuntu-22.04
+            build: bff-Linux
+          - os: macos-15-intel
+            build: bff-macOS-Intel.bin
+          - os: macos-latest
+            build: bff-macOS-Apple_Silicon.bin
+    runs-on: ${{ matrix.os }}
+    env:
+      version: ${{ github.ref_name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+          cache: 'pip'
+          cache-dependency-path: |
+            **/requirements*.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Nuitka Build
+        uses: Nuitka/Nuitka-Action@main
+        with:
+          script-name: bilibili_contacts_request.py
+          mode: onefile
+          output-file: ${{ github.ref_name }}-${{ matrix.build }}
+
+      - name: Upload Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: build/${{ github.ref_name }}-${{ matrix.build }}
