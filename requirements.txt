@@ -1,2 +1,3 @@
-httpx[http2]>=0.28
-protobuf>=6.33
+httpx[http2]
+protobuf
+qrcode
