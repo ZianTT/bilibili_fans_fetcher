@@ -17,14 +17,6 @@ import contacts_pb2
 
 URL = "https://app.bilibili.com/bilibili.app.im.v1.im/Contacts"
 
-
-# AUTHORIZATION = (
-#     "identify_v1 "
-#     "15c168cafc2f5c0832c4d3dd3bfb4b71CjCJxmNydrE3t4FachueFFj3w5VkY4CBVnWBMe10-"
-#     "2FHiOlDU14sT1Y2NCzkDhUaZvYSVjZXcFJ4cVh3VVZGcWlNcWlUR0VXeW56YkRoWGR4YS1rQ2"
-#     "Q0UHNwdjdfTU1nZHFpMkpraEpsQzNCV2FPNVdLNUMyUVF4ellNRjJqV0NCWjRVWWJSdlh3IIEC"
-# )
-
 AUTHORIZATION = ""
 
 USER_AGENT = (
