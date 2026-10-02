@@ -12,7 +12,7 @@ import urllib
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "gen"))
 
-import contacts_pb2
+from gen import contacts_pb2
 
 
 URL = "https://app.bilibili.com/bilibili.app.im.v1.im/Contacts"
